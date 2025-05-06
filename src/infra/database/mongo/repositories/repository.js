@@ -19,8 +19,8 @@ module.exports = class Repository {
     return this.model.countDocuments(query)
   }
 
-  update (query, update) {
-    return this.model.updateOne(query, update)
+  update (query, update, options) {
+    return this.model.updateOne(query, update, options)
   }
 
   delete (query) {

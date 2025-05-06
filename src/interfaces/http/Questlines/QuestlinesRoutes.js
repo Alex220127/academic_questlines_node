@@ -23,5 +23,16 @@ module.exports = [
       scopes: [ 'admin', 'student' ]
     },
     controller: Controller.getQuestlines
+  },
+  {
+    method: 'get',
+    path: '/questlines/:questline_id/share-link',
+    contract: {
+      params: Schema.questlineIdSchema
+    },
+    auth: {
+      scopes: [ 'admin' ]
+    },
+    controller: Controller.shareLink
   }
 ]

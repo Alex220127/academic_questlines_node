@@ -10,6 +10,9 @@ module.exports = {
   userIdSchema: Joi.object({
     user_id: Joi.string().hex().required()
   }).required(),
+  shortCodeSchema: Joi.object({
+    short_code: Joi.string().required()
+  }).required(),
   loginSchema: Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required()

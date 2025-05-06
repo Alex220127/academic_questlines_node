@@ -13,9 +13,10 @@
     "nodemon": "^3.1.10"
   },
   "scripts": {
-    "start": "dotenvx run --env-file=.env.dev -- node src/index.js"
+    "start_dev": "cross-env DOTENV_PRIVATE_KEY_DEV=ff64160e52f165bb523674d2847d561712e441b24101974bf1f184631904cafb dotenvx run --env-file=.env.dev -- node src/index.js"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "vitest": "^3.1.2"
   },
   "_moduleAliases": {

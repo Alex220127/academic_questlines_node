@@ -1,5 +1,5 @@
 const StoreItemRepository = require('@repositories/storeItemRepository')
-const storeItemRepository = new StoreItemRepository()
+const storeItemRepository = StoreItemRepository.getInstance()
 
 exports.execute = async () => {
   const query = { active: true }

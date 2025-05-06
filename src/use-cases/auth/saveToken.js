@@ -1,6 +1,5 @@
 const TokenRepository = require('@repositories/tokenRepository')
-
-const tokenRepository = new TokenRepository()
+const tokenRepository = TokenRepository.getInstance()
 
 exports.execute = async (data) => {
   return tokenRepository.save(data)

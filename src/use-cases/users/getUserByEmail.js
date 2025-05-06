@@ -1,6 +1,5 @@
 const UserRepository = require('@repositories/userRepository')
-
-const userRepository = new UserRepository()
+const userRepository = UserRepository.getInstance()
 
 exports.execute = async (email) => {
   const query = {

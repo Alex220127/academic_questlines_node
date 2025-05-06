@@ -1,5 +1,5 @@
 const QuestlineRepository = require('@repositories/questlineRepository')
-const questlineRepository = new QuestlineRepository()
+const questlineRepository = QuestlineRepository.getInstance()
 
 exports.execute = async (opt) => {
   const query = {}

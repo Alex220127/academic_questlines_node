@@ -8,10 +8,7 @@ const NodesSchema = new Schema({
   type: String,
   question: {
     title: String,
-    alternatives: {
-      type: [ String ],
-      default: null
-    },
+    alternatives: [ String ],
     correct_answer: String
   },
   content: {

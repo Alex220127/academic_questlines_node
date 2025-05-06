@@ -28,15 +28,15 @@ exports.getQuestlines = async (req, res) => {
 exports.shareLink = async (req, res) => {
   const { params: { questline_id } } = req
 
-  const link = generateShortLink.execute({ questline_id })
+  const { link, short_code } = generateShortLink.execute({ questline_id })
 
-  const shortLink = await getShortLink.execute({ short_code: link })
+  const shortLink = await getShortLink.execute({ short_code })
 
   if (shortLink) {
     return res.status(200).json({ link })
   }
 
-  await saveShareLink.execute({ short_code: link, document_id: questline_id })
+  await saveShareLink.execute({ short_code, document_id: questline_id })
 
   return res.status(200).json({ link })
 }

@@ -5,5 +5,5 @@ const { PANEL_LINK } = process.env
 exports.execute = (data) => {
   const shortId = base62EncodeHelper.execute(data)
 
-  return `${PANEL_LINK}/${shortId}`
+  return { short_code: shortId, link: `${PANEL_LINK}/${shortId}` }
 }

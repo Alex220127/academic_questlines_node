@@ -26,4 +26,8 @@ module.exports = class Repository {
   delete (query) {
     return this.model.deleteOne(query)
   }
+
+  deleteMany (query) {
+    return this.model.deleteMany(query)
+  }
 }

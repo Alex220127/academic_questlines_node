@@ -1,6 +1,10 @@
-const jwtHelper = require('../../infra/helpers/jwtHelper')// require('@helpers/jwtHelper')
+require('module-alias/register')
 
-module.exports = (req, res, next, auth) => {
+const jwtHelper = require('@helpers/jwtHelper')
+const getToken = require('@use-cases/auth/getToken')
+const deleteToken = require('@use-cases/auth/deleteToken')
+
+module.exports = async (req, res, next, auth) => {
   const { headers: { authorization } } = req
 
   if (!authorization) {
@@ -12,14 +16,23 @@ module.exports = (req, res, next, auth) => {
   try {
     const tokenData = jwtHelper.verify(token)
 
-    if (!auth.scopes.includes(tokenData.scope)) {
+    const dbToken = await getToken.execute(tokenData.token_id)
+
+    if (!dbToken) {
+      return res.status(403).send('missing_authentication_token')
+    }
+
+    if (!auth.scopes.includes(dbToken.scope)) {
       return res.status(403).send('insuficient_scope')
     }
 
-    req.credentials = tokenData
+    req.credentials = dbToken
 
     next()
   } catch (error) {
+    const decoded = jwtHelper.decode(token)
+    await deleteToken.execute(decoded.token_id)
+
     return res.status(403).send('invalid_authentication_token')
   }
 }

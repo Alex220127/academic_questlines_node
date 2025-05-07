@@ -2,6 +2,7 @@ const getShortLink = require('@use-cases/short-link/getShortLink')
 const getQuestline = require('@use-cases/questline/getQuestline')
 const getQuestlineRegister = require('@use-cases/questline-register/getQuestlineRegister')
 const saveQuestlineRegister = require('@use-cases/questline-register/saveQuestlineRegister')
+const updateNodeStatus = require('@use-cases/questline-register/updateNodeStatus')
 
 exports.joinToQuestline = async (req, res) => {
   const { body: { short_code }, credentials: { user_id } } = req
@@ -32,6 +33,14 @@ exports.joinToQuestline = async (req, res) => {
   }
 
   await saveQuestlineRegister.execute(questlineRegisterData)
+
+  return res.status(204).send()
+}
+
+exports.updateNodeStatus = async (req, res) => {
+  const { params, body, credentials } = req
+
+  await updateNodeStatus.execute({ ...params, ...body, ...credentials })
 
   return res.status(204).send()
 }

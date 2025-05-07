@@ -24,7 +24,6 @@ const NodesSchema = new Schema({
     default: 'pending'
   }
 }, {
-  _id: false,
   versionKey: false
 })
 

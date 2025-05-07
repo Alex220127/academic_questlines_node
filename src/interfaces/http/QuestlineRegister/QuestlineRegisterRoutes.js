@@ -12,5 +12,17 @@ module.exports = [
       scopes: [ 'student' ]
     },
     controller: Controller.joinToQuestline
+  },
+  {
+    method: 'put',
+    path: '/questline-register/:register_id/nodes/:node_id',
+    contract: {
+      params: Schema.nodeRegisterIdSchema,
+      body: Schema.updatRegisterNodeSchema
+    },
+    auth: {
+      scopes: [ 'student' ]
+    },
+    controller: Controller.updateNodeStatus
   }
 ]

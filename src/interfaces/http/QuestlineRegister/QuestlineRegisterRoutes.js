@@ -24,5 +24,28 @@ module.exports = [
       scopes: [ 'student' ]
     },
     controller: Controller.updateNodeStatus
+  },
+  {
+    method: 'get',
+    path: '/questline-register',
+    contract: {
+      headers: Schema.headersSchema
+    },
+    auth: {
+      scopes: [ 'student' ]
+    },
+    controller: Controller.getMyRegisters
+  },
+  {
+    method: 'get',
+    path: '/questline-register/:register_id',
+    contract: {
+      params: Schema.registerIdSchema,
+      headers: Schema.headersSchema
+    },
+    auth: {
+      scopes: [ 'student' ]
+    },
+    controller: Controller.getRegister
   }
 ]

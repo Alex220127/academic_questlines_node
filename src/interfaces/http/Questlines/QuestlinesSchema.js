@@ -7,11 +7,11 @@ module.exports = {
     start_at: Joi.date().required(),
     end_at: Joi.date().required(),
     active: Joi.boolean().optional().default(false),
+    reward: Joi.number().required().allow(0),
     nodes: Joi.array().items(
       Joi.object({
         name: Joi.string().required(),
         type: Joi.string().required().valid('question', 'text', 'video'),
-        reward: Joi.number().optional(),
         question: Joi.when(
           'type',
           {
@@ -20,7 +20,7 @@ module.exports = {
               title: Joi.string().required(),
               alternatives: Joi.array().items(Joi.string()).required().single(),
               correct_answer: Joi.string().required()
-            }),
+            }).required(),
             otherwise: Joi.forbidden()
           }
         ),

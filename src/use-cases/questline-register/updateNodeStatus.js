@@ -9,9 +9,19 @@ exports.execute = async (params) => {
 
   const update = {
     $set: {
-      'nodes.$.status': params.status
+      'nodes.$.status': params.status,
+      'nodes.$.updated_at': new Date()
     }
   }
 
-  return questlineRegisterRepository.update(query, update)
+  if (params.mode === 'update') {
+    return questlineRegisterRepository.update(query, update)
+  }
+
+  const options = {
+    new: true,
+    lean: true
+  }
+
+  return questlineRegisterRepository.findOneAndUpdate(query, update, options)
 }

@@ -23,6 +23,10 @@ module.exports = class Repository {
     return this.model.updateOne(query, update, options)
   }
 
+  findOneAndUpdate (query, update, options) {
+    return this.model.findOneAndUpdate(query, update, options)
+  }
+
   delete (query) {
     return this.model.deleteOne(query)
   }

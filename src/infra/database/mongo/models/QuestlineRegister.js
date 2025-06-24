@@ -22,7 +22,8 @@ const NodesSchema = new Schema({
     type: String,
     enum: [ 'completed', 'pending' ],
     default: 'pending'
-  }
+  },
+  updated_at: Date
 }, {
   versionKey: false
 })

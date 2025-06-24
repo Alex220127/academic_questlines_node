@@ -26,6 +26,8 @@ const QuestlineSchema = new Schema({
   start_at: Date,
   end_at: Date,
   active: Boolean,
+  reward: Number,
+  completedAt: Date,
   nodes: [ NodesSchema ]
 }, {
   versionKey: false,

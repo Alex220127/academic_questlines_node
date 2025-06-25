@@ -5,6 +5,7 @@ const comparePassword = require('@use-cases/auth/comparePassword')
 const createToken = require('@use-cases/auth/createToken')
 const createRefreshToken = require('@use-cases/auth/createRefreshToken')
 const saveToken = require('@use-cases/auth/saveToken')
+const createBalance = require('@use-cases/balance/createBalance')
 const getUserInventory = require('@use-cases/inventory/getUserInventory')
 
 exports.createUser = async (req, res) => {
@@ -12,6 +13,10 @@ exports.createUser = async (req, res) => {
   body.password = encryptPassword.execute(body.password)
 
   const user = await createUser.execute(body)
+
+  if (user.role === 'student') {
+    await createBalance.execute(user._id)
+  }
 
   const token = createToken.execute(user)
   const refreshToken = createRefreshToken.execute(user, token.token_id)

@@ -9,5 +9,5 @@ exports.execute = (user) => {
     scope: user.role
   }
 
-  return { jwt: jwtHelper.sign(tokenData, '1h'), token_data: tokenData }
+  return { jwt: jwtHelper.sign(tokenData, '5d'), token_data: tokenData }
 }

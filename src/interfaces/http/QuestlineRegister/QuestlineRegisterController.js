@@ -5,6 +5,7 @@ const listQuestlineRegister = require('@use-cases/questline-register/listQuestli
 const saveQuestlineRegister = require('@use-cases/questline-register/saveQuestlineRegister')
 const updateQuestlineRegister = require('@use-cases/questline-register/updateQuestlineRegister')
 const updateNodeStatus = require('@use-cases/questline-register/updateNodeStatus')
+const updateBalance = require('@use-cases/balance/updateBalance')
 
 exports.joinToQuestline = async (req, res) => {
   const { body: { short_code }, credentials: { user_id } } = req
@@ -55,6 +56,7 @@ exports.updateNodeStatus = async (req, res) => {
     const update = { $set: { status: 'completed', completed_at: new Date() } }
 
     await updateQuestlineRegister.execute({ query, update })
+    await updateBalance.execute({ user: register.user_id, value: register.questline.reward, operation: 'sum' })
   }
 
   return res.status(204).send()

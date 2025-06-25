@@ -10,5 +10,5 @@ exports.execute = (user, token) => {
     auth_token_id: token
   }
 
-  return { token_data: tokenData, jwt: jwtHelper.sign(tokenData, '1d') }
+  return { token_data: tokenData, jwt: jwtHelper.sign(tokenData, '15d') }
 }

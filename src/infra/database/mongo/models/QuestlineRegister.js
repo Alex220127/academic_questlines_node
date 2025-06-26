@@ -39,6 +39,7 @@ const QuestlineRegisterSchema = new Schema({
     active: Boolean,
     reward: Number
   },
+  completedAt: Date,
   nodes: [ NodesSchema ],
   status: String
 }, {

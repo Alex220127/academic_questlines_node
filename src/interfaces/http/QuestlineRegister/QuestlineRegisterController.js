@@ -53,7 +53,7 @@ exports.updateNodeStatus = async (req, res) => {
 
   if (allCompleted) {
     const query = { _id: params.register_id }
-    const update = { $set: { status: 'completed', completed_at: new Date() } }
+    const update = { $set: { status: 'completed', completedAt: new Date() } }
 
     await updateQuestlineRegister.execute({ query, update })
     await updateBalance.execute({ user: register.user_id, value: register.questline.reward, operation: 'sum' })

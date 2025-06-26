@@ -48,7 +48,7 @@ module.exports = [
     method: 'put',
     path: '/items/:item_id/redeem',
     auth: {
-      scopes: [ 'student', 'admin' ]
+      scopes: [ 'student' ]
     },
     contract: {
       body: Schema.redeemSchema,

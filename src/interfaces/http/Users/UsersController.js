@@ -6,6 +6,7 @@ const createToken = require('@use-cases/auth/createToken')
 const createRefreshToken = require('@use-cases/auth/createRefreshToken')
 const saveToken = require('@use-cases/auth/saveToken')
 const createBalance = require('@use-cases/balance/createBalance')
+const getUserBalance = require('@use-cases/balance/getUserBalance')
 const getUserInventory = require('@use-cases/inventory/getUserInventory')
 
 exports.createUser = async (req, res) => {
@@ -64,5 +65,13 @@ exports.getInventory = async (req, res) => {
 
   const inventory = await getUserInventory.execute(user_id)
 
-  return res.status(200).json(inventory?.items || [])
+  return res.status(200).json(inventory)
+}
+
+exports.getBalance = async (req, res) => {
+  const { params: { user_id } } = req
+
+  const balance = await getUserBalance.execute(user_id)
+
+  return res.status(200).json({ balance: balance?.balance || 0 })
 }

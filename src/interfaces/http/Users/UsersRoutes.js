@@ -25,8 +25,19 @@ module.exports = [
       params: Schema.userIdSchema
     },
     auth: {
-      scopes: [ 'student', 'admin' ]
+      scopes: [ 'student' ]
     },
     controller: Controller.getInventory
+  },
+  {
+    method: 'get',
+    path: '/users/:user_id/balance',
+    contract: {
+      params: Schema.userIdSchema
+    },
+    auth: {
+      scopes: [ 'student' ]
+    },
+    controller: Controller.getBalance
   }
 ]

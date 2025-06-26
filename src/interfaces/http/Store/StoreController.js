@@ -5,6 +5,8 @@ const deleteItemById = require('@use-cases/store-item/deleteItemById')
 const getUserInventory = require('@use-cases/inventory/getUserInventory')
 const getItemById = require('@use-cases/store-item/getItemById')
 const createInventory = require('@use-cases/inventory/createInventory')
+const getUserBalance = require('@use-cases/balance/getUserBalance')
+const updateBalance = require('@use-cases/balance/updateBalance')
 const addItemToUserInventory = require('@use-cases/inventory/addItemToUserInventory')
 
 exports.createStoreItem = async (req, res) => {
@@ -55,17 +57,26 @@ exports.redeemItem = async (req, res) => {
     return res.status(400).send('redeem_limit_reached')
   }
 
+  const balance = await getUserBalance.execute(user_id)
+
+  if (!balance || balance.balance < item.price) {
+    return res.status(403).send('insuficient_funds')
+  }
+
   const alreadyInInventory = inventory.items.find(i => String(i._id) === item_id)
 
   if (alreadyInInventory) {
     return res.status(409).send('item_already_in_inventory')
   }
 
+  await updateBalance.execute({ user: user_id, value: item.price, operation: 'subtract' })
+
+  item.redeemed_at = new Date()
   await addItemToUserInventory.execute(user_id, item)
 
   if (item.redeem_limit) {
     await updateItemById.execute(item_id, { $inc: { total_redeemed: 1 }})
   }
 
-  return res.status(200).json(inventory)
+  return res.status(204).send()
 }

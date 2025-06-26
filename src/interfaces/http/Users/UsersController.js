@@ -12,19 +12,27 @@ exports.createUser = async (req, res) => {
   const { body } = req
   body.password = encryptPassword.execute(body.password)
 
-  const user = await createUser.execute(body)
+  try {
+    const user = await createUser.execute(body)
 
-  if (user.role === 'student') {
-    await createBalance.execute(user._id)
+    if (user.role === 'student') {
+      await createBalance.execute(user._id)
+    }
+
+    const token = createToken.execute(user)
+    const refreshToken = createRefreshToken.execute(user, token.token_id)
+
+    await saveToken.execute(token)
+    await saveToken.execute(refreshToken)
+
+    return res.status(201).json({ token: token.jwt, refresh_token: refreshToken.jwt })
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json('email_in_use')
+    }
+
+    return res.status(422).json('fail_create_user')
   }
-
-  const token = createToken.execute(user)
-  const refreshToken = createRefreshToken.execute(user, token.token_id)
-
-  await saveToken.execute(token)
-  await saveToken.execute(refreshToken)
-
-  return res.status(201).json({ token: token.jwt, refresh_token: refreshToken.jwt })
 }
 
 exports.login = async (req, res) => {

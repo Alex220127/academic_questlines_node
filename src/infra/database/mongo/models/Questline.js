@@ -28,7 +28,8 @@ const QuestlineSchema = new Schema({
   active: Boolean,
   reward: Number,
   completedAt: Date,
-  nodes: [ NodesSchema ]
+  nodes: [ NodesSchema ],
+  created_by: Schema.Types.ObjectId
 }, {
   versionKey: false,
   timestamps: true,

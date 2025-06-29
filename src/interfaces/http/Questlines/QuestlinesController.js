@@ -7,9 +7,9 @@ const getShortLink = require('@use-cases/short-link/getShortLink')
 const paginate = require('@use-cases/pagination/paginate')
 
 exports.createQuestline = async (req, res) => {
-  const { body } = req
+  const { body, credentials: { user_id } } = req
 
-  const questline = await createQuestline.execute(body)
+  const questline = await createQuestline.execute({ ...body, created_by: user_id })
 
   return res.status(201).send(questline)
 }

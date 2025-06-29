@@ -42,7 +42,7 @@ module.exports = {
     questline_id: Joi.string().hex().required()
   }).required(),
   paginateSchema: Joi.object({
-    page: Joi.number().required(),
-    limit: Joi.number().required()
+    page: Joi.number().optional(),
+    limit: Joi.number().optional()
   }).required()
 }

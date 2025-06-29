@@ -15,14 +15,15 @@ exports.createQuestline = async (req, res) => {
 }
 
 exports.getQuestlines = async (req, res) => {
-  const { query } = req
+  const { query, credentials } = req
 
-  const count = await countQuestlines.execute(query)
+  if (credentials.scope === 'admin') {
+    query.created_by = credentials.user_id
+  }
+
   const questlines = await getQuestlines.execute(query)
 
-  const response = paginate.execute(query.page, query.limit, count, questlines)
-
-  return res.status(200).send(response)
+  return res.status(200).send(questlines)
 }
 
 exports.shareLink = async (req, res) => {
@@ -33,10 +34,10 @@ exports.shareLink = async (req, res) => {
   const shortLink = await getShortLink.execute({ short_code })
 
   if (shortLink) {
-    return res.status(200).json({ link })
+    return res.status(200).json({ short_code })
   }
 
   await saveShareLink.execute({ short_code, document_id: questline_id })
 
-  return res.status(200).json({ link })
+  return res.status(200).json({ short_code })
 }

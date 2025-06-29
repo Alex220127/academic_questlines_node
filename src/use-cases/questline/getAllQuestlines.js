@@ -1,17 +1,13 @@
 const QuestlineRepository = require('@repositories/questlineRepository')
 const questlineRepository = QuestlineRepository.getInstance()
 
-exports.execute = async (opt) => {
-  const query = {}
+exports.execute = async (query = {}) => {
   const projection = {}
 
-  const skip = (opt.page - 1) * opt.limit
   const options = {
     sort: {
       createdAt: -1
-    },
-    skip,
-    limit: opt.limit
+    }
   }
 
   return questlineRepository.list(query, projection, options)

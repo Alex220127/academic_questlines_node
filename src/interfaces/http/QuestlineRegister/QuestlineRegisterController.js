@@ -6,6 +6,7 @@ const saveQuestlineRegister = require('@use-cases/questline-register/saveQuestli
 const updateQuestlineRegister = require('@use-cases/questline-register/updateQuestlineRegister')
 const updateNodeStatus = require('@use-cases/questline-register/updateNodeStatus')
 const updateBalance = require('@use-cases/balance/updateBalance')
+const getUserByid = require('@use-cases/users/getUserByid')
 
 exports.joinToQuestline = async (req, res) => {
   const { body: { short_code }, credentials: { user_id } } = req
@@ -28,8 +29,12 @@ exports.joinToQuestline = async (req, res) => {
     return res.status(409).send('already_registered')
   }
 
+  const user = await getUserByid.execute(user_id, { name: 1, email: 1 })
+
   const questlineRegisterData = {
     user_id,
+    user_name: user.name,
+    user_email: user.email,
     questline,
     nodes: questline.nodes,
     status: 'in_progress'

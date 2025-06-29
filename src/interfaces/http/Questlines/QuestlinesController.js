@@ -4,7 +4,7 @@ const countQuestlines = require('@use-cases/questline/countQuestlines')
 const generateShortLink = require('@use-cases/short-link/generateShortLink')
 const saveShareLink = require('@use-cases/short-link/saveShortLink')
 const getShortLink = require('@use-cases/short-link/getShortLink')
-const paginate = require('@use-cases/pagination/paginate')
+const getQuestlineReport = require('@use-cases/questline/questlineReport')
 
 exports.createQuestline = async (req, res) => {
   const { body, credentials: { user_id } } = req
@@ -40,4 +40,12 @@ exports.shareLink = async (req, res) => {
   await saveShareLink.execute({ short_code, document_id: questline_id })
 
   return res.status(200).json({ short_code })
+}
+
+exports.getReport = async (req, res) => {
+  const { query: { questline_id }, credentials: { user_id } } = req
+
+  const report = await getQuestlineReport.execute(user_id, questline_id)
+
+  return res.status(200).json(report)
 }

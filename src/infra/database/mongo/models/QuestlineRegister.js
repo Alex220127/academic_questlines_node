@@ -30,6 +30,8 @@ const NodesSchema = new Schema({
 
 const QuestlineRegisterSchema = new Schema({
   user_id: Schema.Types.ObjectId,
+  user_name: String,
+  user_email: String,
   questline: {
     _id: Schema.Types.ObjectId,
     name: String,
@@ -37,7 +39,8 @@ const QuestlineRegisterSchema = new Schema({
     start_at: Date,
     end_at: Date,
     active: Boolean,
-    reward: Number
+    reward: Number,
+    created_by: Schema.Types.ObjectId
   },
   completedAt: Date,
   nodes: [ NodesSchema ],

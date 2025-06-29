@@ -38,11 +38,17 @@ module.exports = {
       })
     ).single().required().min(1)
   }).required(),
+  reportSchema: Joi.object({
+    questline_id: Joi.string().hex().length(24).allow(null, '')
+  }),
   questlineIdSchema: Joi.object({
     questline_id: Joi.string().hex().required()
   }).required(),
   paginateSchema: Joi.object({
     page: Joi.number().optional(),
     limit: Joi.number().optional()
-  }).required()
+  }).required(),
+  headersSchema: Joi.object({
+    authorization: Joi.string().required()
+  }).required().unknown(),
 }

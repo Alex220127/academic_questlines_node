@@ -34,5 +34,17 @@ module.exports = [
       scopes: [ 'admin' ]
     },
     controller: Controller.shareLink
+  },
+  {
+    method: 'get',
+    path: '/questline/report',
+    contract: {
+      query: Schema.reportSchema,
+      headers: Schema.headersSchema
+    },
+    auth: {
+      scopes: [ 'admin' ]
+    },
+    controller: Controller.getReport
   }
 ]

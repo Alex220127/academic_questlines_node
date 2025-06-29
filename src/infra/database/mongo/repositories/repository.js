@@ -34,4 +34,8 @@ module.exports = class Repository {
   deleteMany (query) {
     return this.model.deleteMany(query)
   }
+
+  aggregate (pipelines) {
+    return this.model.aggregate(pipelines)
+  }
 }
